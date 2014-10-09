@@ -1,0 +1,36 @@
+class SessionsController < ApplicationController
+
+
+ def new
+  # default: render 'new' template
+ end
+
+ def create
+
+   vari=params[:user]
+   #var=params[:user]
+   userid=vari[:user_id]
+   emailid=vari[:email]
+   #@users=User.find_by_user_id(userid)
+   @user=User.find_by_user_id(vari[:user_id])
+    if @user==nil
+     flash[:notice] = "Wrong Username/Password.Try again. "
+   redirect_to login_path
+    
+        elsif vari[:email]==nil ||vari[:user_id]==nil
+        flash[:notice] = " Enter the complete form details"
+	redirect_to login_path	
+
+	elsif vari[:email]==@user[:email]
+        flash[:notice] = " Welcome #{@user.user_id}!"
+	redirect_to movies_path	
+   else
+	   flash[:notice] = "Wrong Username/Password.Try again. "
+	   redirect_to login_path
+   end
+ end
+def destroy
+session[:session_token]=nil
+redirect_to movies_path
+end
+end

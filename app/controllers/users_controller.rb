@@ -1,0 +1,35 @@
+class UsersController < ApplicationController
+
+
+ def new
+  # default: render 'new' template
+ end
+
+ def create
+
+ vari=params[:user]
+ #var=params[:user]
+ userid=vari[:user_id]
+ @user=User.find_by_user_id(userid)
+ 
+if @user==nil
+  # @user = User.create!(params[:user])
+	user=User.create_user!(vari)
+   flash[:notice] = "#{user.user_id} was successfully created."
+   
+   redirect_to login_path
+
+else
+
+flash[:notice] = "Sorry,this user-id is taken.Try again. "
+redirect_to new_user_path
+end
+
+
+
+
+
+
+
+ end
+end
