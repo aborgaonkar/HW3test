@@ -1,6 +1,6 @@
 # This file is app/controllers/movies_controller.rb
 class MoviesController < ApplicationController
-
+before_filter :set_current_user
   def index
     @movies = Movie.all
   end
